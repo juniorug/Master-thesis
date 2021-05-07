@@ -1,0 +1,109 @@
+\documentclass[en, msc, classic, a4paper]{ifbathesis}
+
+%% Preambulo:
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{hyphenat}
+% \usepackage[usenames, dvipsnames, table]{xcolor}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{pifont}
+\usepackage{multirow}
+\usepackage{listings} 
+\usepackage{colortbl}
+\usepackage{xfrac}
+\usepackage{nameref}
+\usepackage[FIGTOPCAP]{subfigure}
+\usepackage[printonlyused, withpage]{acronym}
+\usepackage{graphicx,url}
+%\usepackage[hidelinks,breaklinks]{hyperref}
+%\PassOptionsToPackage{hyphens}{url}
+\usepackage{makecell}
+\renewcommand\theadfont{\bfseries\sffamily}
+
+% ADD SUBSUBSUBSECTION
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+
+\university{Instituto Federal da Bahia}
+\address{Salvador}
+\institute{Departamento de Pós-Graduação e Qualificação}
+\library{Biblioteca Professor Raul Varella Seixas}
+\program{Programa de P\'{o}s-Gradua\c{c}\~{a}o em Engenharia de Sistemas e Produtos}
+\majorfield{Engenharia de Sistemas e Produtos}
+\title{A blockchain framework for traceability in supply chain management}
+
+% Data da defesa
+% e.g. \date{19 de fevereiro de 2013}
+\date{15 de maio de 2021}
+% e.g. \defenseyear{2013}
+\defenseyear{2021}
+
+% Autor
+\author{Edivaldo Mascarenhas Ferreira de Jesus Júnior}
+
+% Orientador(a)
+\adviser{Manoel Carvalho Marques Neto}
+\coadviser{Allan Edgard Silva Freitas}
+
+%% Inicio do documento
+\begin{document}
+\ppgespfrontpage
+\frontmatter
+\ppgesppresentationpage
+
+
+\input{abstract}
+\tableofcontents
+\listoffigures
+\listoftables
+\chapter*{List of Acronyms}
+\begin{acronym}[PPGESP]
+    \acro{PPGESP}{Programa de Pós-Graduação em Engenharia de Sistemas e Produtos}
+    \acro{CNPq}{Conselho Nacional de Desenvolvimento Científico e Tecnológico}
+    \acro{BG}{Byzantine generals}
+    \acro{PoW}{proof-of-work}
+    \acro{BFT}{Byzantine fault tolerance}
+    \acro{SC}{smart contract}
+    \acro{SCM}{Supply Chain Management}
+    \acro{TAM}{Technology Acceptance Model}
+    \acro{SCM-BP}{Supply Chain Management - Blockchain Platform}
+\end{acronym}
+
+%% Parte textual
+\mainmatter
+
+%Seções
+\input{chapters/1_INTRODUCTION/1_INTRODUCTION.tex}
+\input{chapters/2_THEORETICAL_BACKGROUND/2_THEORETICAL_BACKGROUND.tex}
+\input{chapters/3_RELATED_WORK/3_RELATED_WORK.tex}
+%\input{chapters/3_GENERAL_CONTEXT/3_GENERAL_CONTEXT.tex}
+\input{chapters/4_TECHNICAL_SPECIFICATION/4_TECHNICAL_SPECIFICATION.tex}
+\input{chapters/5_CONCLUSION/5_CONCLUSION.tex}
+%% Parte pos-textual
+\backmatter
+
+% Bibliografia
+\bibliographystyle{abntex2-alf}
+\bibliography{biblio}
+
+% Apendices
+\appendix
+
+%\lipsum
+% Eh aconselhavel criar cada apendice em um arquivo separado, digamos
+% "apendice1.tex", "apendice.tex", ... "apendiceM.tex" e depois
+% inclui--los com:
+% \include{apendice1}
+% \include{apendice2}
+% ...
+% \include{apendiceM}
+
+\include{appendix}
+%% Fim do documento
+\end{document}
+%------------------------------------------------------------------------------------------%
