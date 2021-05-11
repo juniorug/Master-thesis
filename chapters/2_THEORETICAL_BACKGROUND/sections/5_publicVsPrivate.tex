@@ -4,6 +4,12 @@ Blockchain networks can be categorized into two groups: public (or permissionles
 
 Since the beginning of blockchain technology, people have debated about public vs permissioned blockchain. In an enterprise environment, it’s actually really important to know the big differences between these two. Basically, public and permissioned blockchain examples play a huge role in the companies looking for the perfect blockchain type for their solutions \cite{101blockchains}. The table \ref{table:pubVsPriv} presents a comparison between public and permissioned blockchain.
 
+The primary difference between public and private blockchain is the level of access participants are granted. In order to pursue decentralization to the fullest extent, public blockchains are completely open. Anyone can participate by adding or verifying data. The most common examples of public blockchain are Bitcoin (BTC) and Ethereum (ETH). Both of these cryptocurrencies are created with open source computing codes, which can be viewed and used by anyone. Public blockchain is about accessibility, and this is evident in how it is used \cite{selfkeyOrg}. 
+
+Conversely, permissioned blockchain (also known as private blockchain) only allows certain entities to participate in a closed network. Participants are granted specific rights and restrictions in the network, so someone could have full access or limited access at the discretion of the network. As a result, permissioned blockchain is more centralized in nature as only a small group controls the network. The most common examples of permissioned blockchains are Ripple (XRP) and Hyperledger \cite{blockgeeks2018deeper}.
+
+Additionally, some public blockchains also allow anonymity, while permissioned blockchains do not. For example, anyone can buy and sell Bitcoin without having their identity revealed. It allows everyone to be treated equally. Whereas with permissioned blockchains, the identities of the participants are known. This is typically because permissioned blockchain is used in the corporate and business to business sphere, where it is important to know who is involved \cite{101blockchains}.
+
 \subsection{Public blockchain}\label{sec:blockchainPublica}
 On a public or permissionless blockchain, any person can participate without a specific identity. Basically, there are no restrictions when it comes to participation. Public blockchains typically involve a native cryptocurrency and often use \acf{PoW} consensus and economic incentives \cite{androulaki2018hyperledger}. Public blockchain can be audited by anyone, and each node has as much transmission power as any other. For a transaction to be considered valid, it must be authorized by all nodes constituents via the consensus process. As long as each node meets protocol-specific stipulations, their transactions can be validated and thus added to the chain \cite{Comstor2018}.
 
@@ -30,6 +36,21 @@ Due to the uncertainties regarding the participants, public blockchains generall
 
 Compensation to these miners for their work is often cryptocurrencies. These incentives are critical to prevent Byzantine attacks by solving the fundamental challenge of agreement on a global scale. Currently proof of work is one of the few successful and resilient consensus approaches to Sybil attacks \cite{douceur2002sybil} (impersonation attacks, when malicious users become impersonate others).
 
+\subsection{The pros and cons of public blockchain}\label{sec:prosConsPub}
+
+One of the biggest advantages of public blockchain is that there is no need for trust. Everything is recorded, public, and cannot be changed. Everyone is incentivized to do the right thing for the betterment of the network. There is no need for intermediaries \cite{blockgeeks2018deeper}.
+
+The other major advantage is security. The more decentralized and active a public blockchain is, the more secure it becomes. As more people work on the network, it becomes harder for any type of attack to be a success. It is nearly impossible for malicious actors to band together and gain control over the network \cite{selfkeyOrg}.
+
+The final piece of what makes public blockchain successful is the transparency. All data related to transactions are open to the public for verification. The transparency of public blockchain increases potential use cases, such as decentralized identity \cite{Comstor2018}.
+
+One of the biggest problems with public blockchain is speed. Public blockchains like Bitcoin are extremely slow, only managing to process seven transactions per second. Compare that to Visa which can do 24,000 transactions per second and you see where the problem is. Public blockchains are slow because it takes time for the network to reach a consensus. Additionally, the time needed to process a single block takes a long time compared to a private blockchain \cite{blockgeeks2018deeper}.
+
+Public blockchains also face concerns over scalability. With the current state of things, public blockchains simply can’t compete with traditional systems. In fact, the more a public blockchain is used, the slower it gets because more transactions clog the network. However, steps are being taken to remedy this problem. An example is Bitcoin’s Lightning Network \cite{selfkeyOrg}.
+
+Lastly, energy consumption has been a concern when it comes to public blockchain. Bitcoin’s algorithm relies on Proof-of-Work, which relies on using a lot of electricity to function. That being said, there are other algorithms such as Proof-of-Stake which use far less electricity \cite{selfkeyOrg}. 
+
+
 \subsection{Permissioned Blockchain}\label{sec:blockchainPrivada}
 Permissioned, federated or private blockchains, on the other hand, perform a blockchain between a set of known and identified participants. A permissioned blockchain provides a way to protect the interactions between a group of entities that have a common goal but that don't totally trust each other, like companies that trade funds, assets or information. Relying on peer identities, one permissioned blockchain may use the traditional consensus of \acf{BFT} \cite{androulaki2018hyperledger}.
 
@@ -50,7 +71,7 @@ The main characteristics of a public blockchain are:
 \item Regulations;
 \end{itemize}
 
-\subsubsection{Consensus for Permissioned Blockchain}\label{sec:consensoPrivada}
+\subsubsection{Consensus for permissioned Blockchain}\label{sec:consensoPrivada}
 Due to the fact that it is a controlled network with $n$ known participants and identified by the federation, classic \acf{BFT} protocols and deterministic Byzantine consensus can be adapted to the blockchain \cite{androulaki2018hyperledger}.
 
 In addition, there is no need to use incentives to agreement, as the federation of stakeholders can establish its own financial model of remuneration. Incentives, however, may be used for other purposes but, different from evidence-based consensus, they are not essential to consensus \cite{greve2018blockchain}.
@@ -62,6 +83,17 @@ In the \ac{BFT} literature, replication consistency is maintained by two princip
 \item Proposal Security: A (higher-ranked) proposal can extend, but not modify, any lower-ranking compromised log prefix \cite{abraham2017blockchain}.
 \end{itemize}
 
+\subsection{The pros and cons of permissioned blockchain}\label{sec:prosConsPriv}
+
+A big advantage of permissioned blockchain is speed. Permissioned blockchains have far fewer participants, meaning it takes less time for the network to reach a consensus. As a result, more transactions can take place. Permissioned blockchains can process thousands of transactions per second. When you compare that to Bitcoin’s seven transactions per second, that is a massive difference \cite{di17blockchain}.
+
+permissioned blockchains are also far more scalable. As only a few nodes are authorized and responsible for managing data, the network is able to process more transactions. The decision making process is much faster because it is centralized \cite{selfkeyOrg}.
+
+However, the centralization of permissioned blockchain is one of its biggest disadvantages. Blockchain was built to avoid centralization, and permissioned blockchain inherently becomes centralized due to its private network \cite{blockgeeks2018deeper}.
+
+Trust is also a bigger issue when it comes to permissioned blockchain. The credibility of a permissioned blockchain network relies on the credibility of the authorized nodes. They need to be trustworthy as they are verifying and validating transactions. The validity of records also can’t be independently verified \cite{blockgeeks2018deeper}.
+
+Security is another concern with permissioned blockchain. With fewer nodes, it is easier for malicious actors to gain control of the network. Unfortunately, a permissioned blockchain is far more at risk of being hacked or having data manipulated \cite{abraham2017blockchain}.
 
 \begin{table}[H]
 \caption{Public Vs Permissioned Blockchain: The Comparison Table \cite{101blockchains}}
