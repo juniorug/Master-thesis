@@ -32,9 +32,9 @@ Smart contracts have many APIs available to them. Critically, in all cases, whet
 
 \subsubsection{Implementation Details}\label{sec:Implementation}
 
-Our chaincode is written in Golang and provides all contracts needed to proceed traceability in our application. All contracts for use in chaincode must implement the interface \textit{contractapi.ContractInterface}. 
+The chaincode is written in Golang and provides all contracts needed to proceed traceability in the application. All contracts for use in chaincode must implement the interface \textit{contractapi.ContractInterface}. 
 
-The first step is to create a JSON config file providing all information about these three items. A configuration file includes \textit{assetId}, a list of actors and a list of ordered steps. Our chaincode processes this file through  \textit{initLedger} and \textit{createNewAsset} functions. Here follows a template for config file:  
+The first step is to create a JSON config file providing all information about these three items. A configuration file includes \textit{assetId}, a list of actors and a list of ordered steps. The chaincode processes this file through  \textit{initLedger} and \textit{createNewAsset} functions. Here follows a template for config file:  
 
 \begin{lstlisting}
 {
@@ -77,6 +77,7 @@ type Actor struct {
   ActorId    string  `json:"actorId"`
   ActorType  string  `json:"actorType"`
   ActorName  string  `json:"actorName"`
+  Deleted    bool    `json:"deleted"`
   AditionalInfo map[string]string `json:"  aditionalInfo"`
 }
 
@@ -85,25 +86,33 @@ type Step struct {
   StepName   string  `json:"stepName"`
   StepOrder  uint    `json:"stepOrder"`
   ActorType  string  `json:"actorType"`
+  Deleted    bool    `json:"deleted"`
   AditionalInfo map[string]string `json:"  aditionalInfo"`
 }
 
 type AssetItem struct {
-  AssetItemId      string  `json:"assetItemId"`
-  CurrentOwnerId   string  `json:"currentOwnerId"`
-  ProcessDate      string  `json:"processDate"`
-  DeliveryDate     string  `json:"deliveryDate"`
-  OrderPrice       string  `json:"orderPrice"`
-  ShippingPrice    string  `json:"shippingPrice"`
-  Status           string  `json:"status"`
+  AssetItemId   string    `json:"assetItemId"`
+  OwnerId       string    `json:"ownerId"`
+  StepID        string    `json:"stepID"`
+  ParentID      string    `json:"parentID"`
+  Children      []string  `json:"children"`;
+  ProcessDate   string    `json:"processDate"`
+  DeliveryDate  string    `json:"deliveryDate"`
+  OrderPrice    string    `json:"orderPrice"`
+  ShippingPrice string    `json:"shippingPrice"`
+  Status        string    `json:"status"`
+  Quantity      string    `json:"quantity"`
+  Deleted       bool      `json:"deleted"`
   AditionalInfo map[string]string `json:"  aditionalInfo"`
 }
 
 type Asset struct {
   AssetId      string       `json:"assetId"`
+  AssetName    string       `json:"assetName"`
   AssetItems   []AssetItem  `json:"assetItems"`
   Actors       []Actor      `json:"actors"`
   Steps        []Step       `json:"steps"`
+  Deleted      bool         `json:"deleted"`
   AditionalInfo map[string]string `json:"aditionalInfo"`
 }
 \end{lstlisting}
@@ -128,57 +137,142 @@ func main() {
 }
 \end{lstlisting}
 
-When creating an asset item, an  \textit{AssetItemId} is generated. Each entity in the chain will have its unique entity ID and timestamp when it starts processing the transaction. By querying \textit{AssetItemId}, the user can easily track the current transaction information and status. Finally, completed all steps, the Blockchain will update \textit{deliverDate} and mark the status as completed once the last actor (generally the consumer) has received the order. Here follows \textit{CreateAsset} function:
+When creating an asset item, an \textit{AssetItemId} is generated. Each entity in the chain will have its unique entity ID and timestamp when it starts processing the transaction. By querying \textit{AssetItemId}, the user can easily track the current transaction information and status. Finally, completed all steps, the Blockchain will update \textit{deliverDate} and mark the status as completed once the last actor (generally the consumer) has received the order. Here follows \textit{CreateAsset} function:
 
 \begin{lstlisting}
 func (s *SmartContract) CreateAsset(
-  ctx contractapi.TransactionContextInterface, assetId string, 
-  assetItems []AssetItem, actors []Actor, steps []Step, 
-  aditionalInfo map[string]string) error {
+  ctx contractapi.TransactionContextInterface, assetId string,
+  assetName string, assetItems []AssetItem, actors []Actor,
+  steps []Step, aditionalInfo map[string]string) error {
   
+  if err != nil {
+    return fmt.Errorf(
+      "Failed to read the data from world state: %s", err
+    )
+  }
+
+  if assetJSON != nil {
+    return fmt.Errorf("The asset %s already exists", assetID)
+  }
+	
   asset := Asset {
     AssetId:          assetId,
+    AssetName:        assetName,
     AssetItems:       assetItems,
     Actors:           actors,
     Steps:            steps,
+    Deleted:          false,
     aditionalInfo: aditionalInfo,
   }
   assetAsBytes, _ := json.Marshal(asset)
+  if err != nil {
+    return err
+  }
   return 
     ctx.GetStub().PutState("ASSET"+assetId,assetAsBytes)
 }
 \end{lstlisting}
 
-\textit{ChangeAssetItemOwner} is the method called to update an asset item when it is moved from a step to another. It updates the \textit{CurrentOwnerId}, the \textit{ProcessDate}, information about prices and many other details of the transactions by the key/value map \textit{  aditionalInfo}. Here follows this fuction:
+\textit{MoveAssetItem} is the method called to update an asset item when it is moved from a step to another. It updates the \textit{CurrentOwnerId}, the \textit{ProcessDate}, information about prices and many other details of the transactions by the key/value map \textit{  aditionalInfo}. Here follows this fuction:
 
 \begin{lstlisting}
-func (s *SmartContract) ChangeAssetItemOwner(
+func (s *SmartContract) MoveAssetItem(
   ctx contractapi.TransactionContextInterface, 
-  assetItemId string, newOwnerId string, orderPrice string,
-  shippingPrice string, status string, 
-  aditionalInfo map[string]string) error {
+  assetItemID string, newAssetItemID string, stepID string, 
+  newOwnerID string, orderPrice string, shippingPrice string, 
+  status string, quantity string, 
+  aditionalInfo map[string]string ) error {
   
-  assetItem, err := s.QueryAssetItem(
-    ctx, "ASSET_ITEM"+assetItemId)
-  if err != nil {
-    return err
-  }
+  _, err := s.QueryAssetItem(ctx, assetItemID)
+	if err != nil {
+		return err
+	}
 
-  assetItem.CurrentOwnerId = newOwnerId
-  assetItem.ProcessDate = time.Now()
-    .Format("2006-01-02 15:04:05")
-  assetItem.OrderPrice = orderPrice
-  assetItem.ShippingPrice = shippingPrice
-  assetItem.Status = status
-  for key, value := range aditionalInfo {
-    assetItem.AditionalInfoMap[key] = value
-  }
-  assetItemAsBytes, _ := json.Marshal(assetItem)
-  return 
-    ctx.GetStub().PutState(
-      "ASSET_ITEM"+assetItemId, assetItemAsBytes)
+	newAssetItem := AssetItem{
+		AssetItemID:      newAssetItemID,
+		OwnerID:          newOwnerID,
+		StepID:           stepID,
+		ParentID:         assetItemID,
+		ProcessDate:      time.Now().Format(
+		    "2006-01-02 15:04:05"
+		),
+		OrderPrice:       orderPrice,
+		ShippingPrice:    shippingPrice,
+		Status:           status,
+		Quantity:         quantity,
+		Deleted:          false,
+		AditionalInfoMap: aditionalInfo,
+	}
+
+	assetItemAsBytes, err := json.Marshal(newAssetItem)
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(
+	    "ASSET_ITEM_"+newAssetItemID, assetItemAsBytes
+	)
 }
 \end{lstlisting}
+
+\textcolor{red}{TODO: UPDATE TRACK-ASSET-ITEM METHOD}
+
+\textit{TrackAssetItem} is the method responsible for track an asset item. It returns the children tree of the given element and its ancestors from the beginning of the Supply chain.
+
+\begin{lstlisting}
+func (s *SmartContract) TrackAssetItem(
+  ctx contractapi.TransactionContextInterface, 
+  assetItemID string) ([]*AssetItem, error) {
+  
+	assetItem, err := s.QueryAssetItem(ctx, assetItemID)
+	log.Print(
+	  "tracking assetItem id: ", assetItem.AssetItemID
+	 )
+	if err != nil {
+	  return nil, fmt.Errorf(
+		"Failed from world state. %s", err.Error()
+	  )
+	}
+
+	if assetItem == nil {
+	  return nil, fmt.Errorf(
+	    "%s does not exist", assetItemID
+	  )
+	}
+
+	trackedItems := make([]*AssetItem, 0)
+
+	trackedItems = append(trackedItems, assetItem)
+	for {
+	  currentParentId, err := strconv.Atoi(
+	    assetItem.ParentID
+	  )
+	  log.Print("currentParentId: ", currentParentId)
+	  if currentParentId <= 0 {
+	    log.Print(
+	      "oldParentId is equals or less than 0. break it"
+	    )
+		break
+	  }
+	  parentAssetItem, err := s.QueryAssetItem(
+	    ctx, assetItem.ParentID
+	  )
+	  if err != nil {
+	    return nil, fmt.Errorf(
+	      "Failed to read from world state. %s", err.Error()
+	    )
+	  }
+	  newParentId, err := strconv.Atoi(
+	    parentAssetItem.ParentID
+	  )
+	  log.Print("newParentId: ", newParentId)
+	  trackedItems = append(trackedItems, parentAssetItem)
+	  assetItem = parentAssetItem
+	}
+	return trackedItems, nil
+}
+\end{lstlisting}
+
 
 Figure~\ref{fig:sequenceDiagram} shows the interaction flow from users with Árion platform. Initially, an admin persona creates and configure the SCM, adding information about the steps and the users. After that, the admin can activate this SCM, and from that point, the actors can interact with the SCM to provide information about an asset item and also move this asset item through the supply chain. From that point too, any user can track an asset item to get information about the required good.
 

@@ -29,7 +29,18 @@
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 
-
+\newenvironment{dedication}
+  {\clearpage           % we want a new page
+   \thispagestyle{empty}% no header and footer
+   \vspace*{\stretch{6}}% some space at the top 
+   \itshape             % the text is in italics
+   \raggedleft          % flush to the right margin
+  }
+  {\par % end the paragraph
+   \vspace{\stretch{0}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+  }
+  
 \university{Instituto Federal da Bahia}
 \address{Salvador}
 \institute{Departamento de Pós-Graduação e Qualificação}
@@ -57,6 +68,12 @@
 \frontmatter
 \ppgesppresentationpage
 
+\begin{dedication}
+\vspace*{\fill}
+    This work is dedicated to the memory of \\ Edivaldo M. F. de Jesus (1951--2021)
+    \vspace*{\fill}
+
+\end{dedication}
 
 \input{abstract}
 \tableofcontents
@@ -84,7 +101,8 @@
 \input{chapters/3_RELATED_WORK/3_RELATED_WORK.tex}
 %\input{chapters/3_GENERAL_CONTEXT/3_GENERAL_CONTEXT.tex}
 \input{chapters/4_TECHNICAL_SPECIFICATION/4_TECHNICAL_SPECIFICATION.tex}
-\input{chapters/5_CONCLUSION/5_CONCLUSION.tex}
+\input{chapters/5_USE_EXAMPLE/5_USE_EXAMPLE.tex}
+\input{chapters/6_CONCLUSION/6_CONCLUSION.tex}
 %% Parte pos-textual
 \backmatter
 
