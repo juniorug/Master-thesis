@@ -1,0 +1,404 @@
+\section{Template for config file}{} %sem preambulo
+\label{app:template}
+
+\begin{minted}{json}
+{
+   "AssetId":"assetID",
+   "AssetName":"assetName",
+   "AssetDescription":"assetDescription",
+   "Actors":[
+      {
+         "actorType":"type",
+         "aditionalInfo":[
+            {
+               "key":"value"
+            }
+         ]
+      }
+   ],
+   "Steps":[
+      {
+         "StepId":"stepID",
+         "StepName":"stepName",
+         "StepOrder":1,
+         "ActorType":"actorType",
+         "aditionalInfo":[
+            {
+               "key":"value"
+            }
+         ]
+      }
+   ]
+}
+\end{minted}
+
+\section{Assets, asset items, steps and actors structs}{} %sem preambulo
+\label{app:structs}
+
+
+\begin{minted}{go}
+type Actor struct {
+  ActorId    string  `json:"actorId"`
+  ActorType  string  `json:"actorType"`
+  ActorName  string  `json:"actorName"`
+  Deleted    bool    `json:"deleted"`
+  AditionalInfo map[string]string `json:"  aditionalInfo"`
+}
+
+type Step struct {
+  StepId     string  `json:"stepId"`
+  StepName   string  `json:"stepName"`
+  StepOrder  uint    `json:"stepOrder"`
+  ActorType  string  `json:"actorType"`
+  Deleted    bool    `json:"deleted"`
+  AditionalInfo map[string]string `json:"  aditionalInfo"`
+}
+
+type AssetItem struct {
+  AssetItemId   string    `json:"assetItemId"`
+  OwnerId       string    `json:"ownerId"`
+  StepID        string    `json:"stepID"`
+  ParentID      string    `json:"parentID"`
+  Children      []string  `json:"children"`;
+  ProcessDate   string    `json:"processDate"`
+  DeliveryDate  string    `json:"deliveryDate"`
+  OrderPrice    string    `json:"orderPrice"`
+  ShippingPrice string    `json:"shippingPrice"`
+  Status        string    `json:"status"`
+  Quantity      string    `json:"quantity"`
+  Deleted       bool      `json:"deleted"`
+  AditionalInfo map[string]string `json:"  aditionalInfo"`
+}
+
+type Asset struct {
+  AssetId      string       `json:"assetId"`
+  AssetName    string       `json:"assetName"`
+  Description  string       `json:"description"`
+  AssetItems   []AssetItem  `json:"assetItems"`
+  Actors       []Actor      `json:"actors"`
+  Steps        []Step       `json:"steps"`
+  Deleted      bool         `json:"deleted"`
+  AditionalInfo map[string]string `json:"aditionalInfo"`
+}
+\end{minted}
+
+\section{Main function}{} %sem preambulo
+\label{app:main}
+
+\begin{minted}{go}
+func main() {
+  chaincode, err := contractapi.NewChaincode(new(SmartContract))
+  if err != nil {
+    fmt.Printf("Error create chaincode: %s", err.Error())
+    return
+  }
+  if err := chaincode.Start(); err != nil {
+    fmt.Printf("Error starting chaincode: %s", err.Error())
+  }
+}
+\end{minted}
+
+\section{Create Asset}{} %sem preambulo
+\label{app:CreateAsset}
+
+\begin{minted}{go}
+func (s *SmartContract) CreateAsset(
+  ctx contractapi.TransactionContextInterface, assetId string,
+  assetName string, description string, assetItems []AssetItem, 
+  actors []Actor, steps []Step, aditionalInfo map[string]string) error {
+  
+  if err != nil {
+    return fmt.Errorf(
+      "Failed to read the data from world state: %s", err
+    )
+  }
+
+  if assetJSON != nil {
+    return fmt.Errorf("The asset %s already exists", assetID)
+  }
+  
+  asset := Asset {
+    AssetId:       assetId,
+    AssetName:     assetName,
+    Description:   description,
+    AssetItems:    assetItems,
+    Actors:        actors,
+    Steps:         steps,
+    Deleted:       false,
+    aditionalInfo: aditionalInfo,
+  }
+  assetAsBytes, _ := json.Marshal(asset)
+  if err != nil {
+    return err
+  }
+  return ctx.GetStub().PutState("ASSET_"+assetId,assetAsBytes)
+}
+\end{minted}
+
+\section{Move asset item}{} %sem preambulo
+\label{app:MoveAssetItem}
+
+\begin{minted}{go}
+func (s *SmartContract) MoveAssetItem(
+  ctx contractapi.TransactionContextInterface, 
+  assetItemID string, newAssetItemID string, stepID string, 
+  newOwnerID string, orderPrice string, shippingPrice string, 
+  status string, quantity string, 
+  aditionalInfo map[string]string ) error {
+  
+  assetItemJSON, err := s.QueryAssetItem(ctx, assetItemID)
+  if err != nil {
+    return err
+  }
+  if assetItemJSON == nil {
+    return fmt.Errorf("The assetItem %s does not exists", assetItemID)
+  }
+
+  newAssetItem := AssetItem{
+    AssetItemID:      newAssetItemID,
+    OwnerID:          newOwnerID,
+    StepID:           stepID,
+    ParentID:         assetItemID,
+    Children:         []string{},
+    ProcessDate:      time.Now().Format("2006-01-02 15:04:05"),
+    OrderPrice:       orderPrice,
+    ShippingPrice:    shippingPrice,
+    Status:           status,
+    Quantity:         quantity,
+    Deleted:          false,
+    AditionalInfoMap: aditionalInfo,
+  }
+
+  assetItemAsBytes, err := json.Marshal(newAssetItem)
+  if err != nil {
+    return err
+  }
+
+  return ctx.GetStub().PutState(
+    "ASSET_ITEM_"+newAssetItemID, assetItemAsBytes
+  )
+}
+\end{minted}
+
+\section{Track asset item}{} %sem preambulo
+\label{app:TrackAssetItem}
+
+\begin{minted}{go}
+func (s *AssetTransferSmartContract) TrackAssetItem(
+  ctx contractapi.TransactionContextInterface, 
+  assetItemID string) ([]*AssetItem, error) {
+  
+  assetItem, err := s.QueryAssetItem(ctx, assetItemID)
+  log.Print("tracking info from assetItem id: ", assetItem.AssetItemID)
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to read from world state. %s", err.Error()
+    )
+  }
+
+  if assetItem == nil {
+    return nil, fmt.Errorf("%s does not exist", assetItemID)
+  }
+
+  trackedItems := make([]*AssetItem, 0)
+
+  //first add the children to tracked items
+  children, err := s.getChildenTree(ctx, assetItem)
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to read from world state. %s", err.Error()
+    )
+  }
+
+  for _, child := range children {
+    fmt.Println(child)
+    trackedItems = append(trackedItems, child)
+  }
+
+  //then, add the current item to tracked items
+  trackedItems = append(trackedItems, assetItem)
+
+  //finally, add the ancestor of current item to tracked items
+  for {
+    currentParentId, err := strconv.Atoi(assetItem.ParentID)
+    if (currentParentId <= 0) {
+      break
+    }
+    parentAssetItem, err := s.QueryAssetItem(ctx, assetItem.ParentID)
+    if err != nil {
+      return nil, fmt.Errorf(
+        "Failed to read from world state. %s", err.Error()
+      )
+    }
+    newParentId, err := strconv.Atoi(parentAssetItem.ParentID)
+    log.Print("newParentId: ", newParentId)
+    trackedItems = append(trackedItems, parentAssetItem)
+    assetItem = parentAssetItem
+  }
+  return trackedItems, nil
+}
+
+func (s *AssetTransferSmartContract) getChildenTree(
+  ctx contractapi.TransactionContextInterface, 
+  assetItem *AssetItem) ([]*AssetItem, error) {
+  
+  tree := make([]*AssetItem, 0)
+  log.Print("len(assetItem.Children): ", len(assetItem.Children))
+  if len(assetItem.Children) == 0 {
+    tree = append(tree, assetItem)
+  } else {
+    for _, childId := range assetItem.Children {
+      childAssetItem, err := s.QueryAssetItem(ctx, childId)
+      if err != nil {
+        return nil, fmt.Errorf(
+          "Failed to read from world state. %s", err.Error()
+        )
+      }
+      if childAssetItem == nil {
+        return nil, fmt.Errorf("%s does not exist", childId)
+      }
+
+      childrenTree, err := s.getChildenTree(ctx, childAssetItem)
+      for _, child := range childrenTree {
+        tree = append(tree, child)
+      }
+    }
+    tree = append(tree, assetItem)
+  }
+  return tree, nil
+}
+\end{minted}
+
+\section{Audit Methods}{} %sem preambulo
+\label{app:auditMethods}
+
+\begin{minted}{go}
+func getTransactionByID(
+  vledger ledger.PeerLedger, tid []byte) pb.Response {
+
+  if tid == nil {
+    return nil, fmt.Errorf("Transaction ID must not be nil.")
+  }
+
+  processedTran, err := vledger.GetTransactionByID(string(tid))
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to get transaction with id %s, error %s", 
+      string(tid), err.Error()
+    )
+  }
+
+  bytes, err := protoutil.Marshal(processedTran)
+  if err != nil {
+    return nil, fmt.Errorf(err.Error())
+  }
+
+  return shim.Success(bytes)
+}
+
+func getBlockByNumber(
+  vledger ledger.PeerLedger, number []byte) pb.Response {
+  
+  if number == nil {
+    return nil, fmt.Errorf("Block number must not be nil.")
+  }
+  bnum, err := strconv.ParseUint(string(number), 10, 64)
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to parse block number with error %s", err
+    )
+  }
+  block, err := vledger.GetBlockByNumber(bnum)
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to get block number %d, error %s", bnum, err
+    )
+  }
+  
+  bytes, err := protoutil.Marshal(block)
+  if err != nil {
+    return nil, fmt.Errorf(err.Error())
+  }
+
+  return shim.Success(bytes)
+}
+
+func getBlockByHash(
+  vledger ledger.PeerLedger, hash []byte) pb.Response {
+  
+  if hash == nil {
+    return nil, fmt.Errorf("Block hash must not be nil.")
+  }
+  block, err := vledger.GetBlockByHash(hash)
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to get block hash %s, error %s", string(hash), err
+    )
+  }
+
+  bytes, err := protoutil.Marshal(block)
+  if err != nil {
+    return nil, fmt.Errorf(err.Error())
+  }
+
+  return shim.Success(bytes)
+}
+
+func getChainInfo(vledger ledger.PeerLedger) pb.Response {
+  binfo, err := vledger.GetBlockchainInfo()
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to get block info with error %s", err
+    )
+  }
+  bytes, err := protoutil.Marshal(binfo)
+  if err != nil {
+    return nil, fmt.Errorf(err.Error())
+  }
+  return shim.Success(bytes)
+}
+
+func getBlockByTxID(
+  vledger ledger.PeerLedger, rawTxID []byte) pb.Response {
+  txID := string(rawTxID)
+  block, err := vledger.GetBlockByTxID(txID)
+  if err != nil {
+    return nil, fmt.Errorf(
+      "Failed to get block for txID %s, error %s", txID, err
+    )
+  }
+  bytes, err := protoutil.Marshal(block)
+  if err != nil {
+    return nil, fmt.Errorf(err.Error())
+  }
+  return shim.Success(bytes)
+}
+
+func (e *LedgerQuerier) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
+  args := stub.GetArgs()
+  fname := string(args[0])
+  cid := string(args[1])
+  sp, err := stub.GetSignedProposal()
+  name, err := protoutil.InvokedChaincodeName(sp.ProposalBytes)
+  targetLedger := e.ledgers.GetLedger(cid)
+  qscclogger.Debugf("Invoke function: %s on chain: %s", fname, cid)
+  res := getACLResource(fname)
+
+  switch fname {
+  case GetTransactionByID:
+    return getTransactionByID(targetLedger, args[2])
+  case GetBlockByNumber:
+    return getBlockByNumber(targetLedger, args[2])
+  case GetBlockByHash:
+    return getBlockByHash(targetLedger, args[2])
+  case GetChainInfo:
+    return getChainInfo(targetLedger)
+  case GetBlockByTxID:
+    return getBlockByTxID(targetLedger, args[2])
+  }
+
+  return nil, fmt.Errorf(
+    "Requested function %s not found.", fname
+  )
+}
+\end{minted}

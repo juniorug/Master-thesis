@@ -47,6 +47,14 @@ The following two properties must be maintained:
 
 It is noted that \textit{generateKeys()} and \textit{sign()} can be random algorithms. In fact, generating keys should be randomized, because it should be generating different keys for different people. On the other hand, \textit{verify()} will always be deterministic.
 
+\begin{figure}[htbp]
+\begin{center}
+  \includegraphics[scale=1.0]{images/AliceBob.jpg}
+\caption{Signatures validated by public/private key}
+\label{fig:authenticationExample}
+\end{center}
+\end{figure}
+
 \subsection{Consensus}\label{sec:consenso}
 The key to blockchain operation is that the network must agree collectively on the ledger's content. Instead of a central entity maintain control over information (such as a bank for example), the data is shared among all. This requires the network to maintain the consensus around the information recorded in the block chain. How this consensus is reached, affects the security and economic parameters of the protocol \cite{kostarev2017review}.
 
@@ -72,6 +80,14 @@ Reaching consensus in such an environment is a challenge. This is also a challen
 \item Proof-of-Burn;
 \item Proof-of-Weight;
 \end{itemize}
+
+\begin{figure}[htbp]
+\begin{center}
+  \includegraphics[scale=0.55]{images/consensus.png}
+\caption{Consensus Mechanism}
+\label{fig:Consensus}
+\end{center}
+\end{figure}
 
 A good consensus algorithm means efficiency, security and convenience. Current common consensus algorithms still have many shortcomings. New consensus algorithms are created to solve some blockchain-specific problems \cite{zheng2016blockchain}.
 
@@ -119,7 +135,7 @@ The body's block consists of a transaction counter and transaction. The maximum 
 
 The validation of a block consists in verifying (i) if its structure is well formed (ii) its hash is valid (meets the challenge), (iii) its size is within the network accepted limit, (iv) the set of transactions within the block is valid, (v) the first transaction (and only the first) is the coinbase transaction - which incorporates the generation of new cryptocurrencies in the system, besides acting as a reward mechanism. The blocks are validated independently, by each node of the blockchain network, and this feature contributes to the process decentralization \cite{greve2018blockchain}.
 
-In mining process, new transactions are vilified by the nodes in the whole system known as “miners” before being added to blockchain. Miners add new blocks on the chain or new transactions on the block by a consensus algorithm, which must be confirmed by majority or all the nodes in the system, like a voting operation, as the valid data. Blockchain-based systems rely on miners to aggregate transactions into blocks and append them to the blockchain. Once the transaction is confirmed by a sufficient number of nodes, it becomes a valid and permanent part of the database. The figure \ref{fig:blockchain} presents a visual representation of a blockchain \cite{tian2017supply}.
+The figure \ref{fig:blockchain} presents a visual representation of a blockchain \cite{tian2017supply}.
 
 \begin{figure}[htbp]
 \begin{center}
