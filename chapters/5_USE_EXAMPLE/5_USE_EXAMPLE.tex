@@ -13,12 +13,29 @@ At the architectural design stage of the system two basic activities were perfor
 
 In the application development period, the backend and frontend components were created from the computational description of the design phase. Pre-existing software tools and class libraries were used to activity streamline. These tools and libraries were defined during the architectural design and were referenced in \cref{sec:WebAppFrondEnd,sec:WebAppBackEnd} .
 
-For system validation, two main requirements were evaluated: the components and the behavior of who will use the application. For the first point, functional, integration and security tests will be performed. For the second, the \acf{TAM} method was used to evaluate user acceptance, utility and ease of use.
+For system validation, two main requirements were evaluated: the components and the behavior of who will use the application. For the first point, functional, integration and security tests will be performed. For the second, this proof of concept were applied.
 
 The appendix \ref{app:projectManagement} presents the activities for project management, the user stories and non-functional requirements. 
 
 
-\section{Workflow}\label{sec:workflow}
+\section{Use Example}\label{sec:workflow}
+
+To accomplish this usage example, one Coffee supply chain will be defined and configured accordingly. The supply chain of coffee beans is a lengthy process that involves growing the beans, harvesting, hulling, drying, packing, bulking, blending, and finally roasting. In between this process, the beans go through international transporters, export sellers, and retailers like grocery stores, cafes, and specialty shops. A coffee tree can take four to seven years before it yields its first crop of beans. The harvesting process is a very labor-intensive exercise. Parts of the cherry must be removed in order to access the beans and need to be laid out to dry. Once the beans are dried, they are packaged into large sacks and passed onto the exporters. From there, they are distributed to big companies in the coffee business who take these beans and put them in industrial roasting and distribution centers. The inventory stock from the roasting and distributing centers must be passed forward to retailers. Through a web of transport, these coffee beans are delivered to thousands of roasters, cafes, restaurants, grocery stores, and large chain retailers where they finally will come to the final users who will taste its flavor. 
+
+For this scenario, five steps will be taken: Extraction is the step where the coffee is growing and picking. Processing is when the beans are dry, roasting, grinding, and packaging. Distribution is when the packages are shipping. Retail is about selling the product and the final step is the final user consumption.
+
+Five fictitious business enterprises and a final customer are named as follows: Tasty Coffee Farm, situated in Brazil, is known as an extractor and is responsible for all the information regarding the extraction step in the supply chain. Café Brazilium is the manufacturer and is responsible for the processing step. There will be two distribution companies, the first is Edgard Cargo which is the Distributor company and is in charge of distribution details. This company will send the coffee produced in Brazil to the United States. The second is O'Neil DistInc, a competitor of the first one. Marques BigSales is a United States situated Delicatessen store and is at the helm of selling details. Allan Manoel Jr. known as a customer, which wants to experiment with a Brazilian coffee for the first time. Being very curious, the customer would like to know the provenance and the information through all the way the coffee he is drink where the coffee has passed.  
+
+As actors each company above will have one user configured in the platform:  
+
+\begin{itemize}
+\item Extractor: James Johnson.
+\item Manufacturer: Donald Jackson.
+\item Distribution: Elizabeth Taylor.
+\item Distribution: Charlotte O'Neil.
+\item Retailer: BigSales.
+\item Customer: Allan Manoel Jr.
+\end{itemize}
 
 The first step when creating a new Supply Chain  is to create and configure the asset. This action is made by the admin user. By going through the setup wizard, first the asset's info is requested:
 
@@ -30,7 +47,7 @@ The first step when creating a new Supply Chain  is to create and configure the 
 \end{center}
 \end{figure}
 
-Then the admin will add actors to the SCM informing its types:
+Then the admin will add actors to the SCM informing its types. Actors can be added, updated or deleted later on, in the actors' list page.
 
 \begin{figure}[H]
 \begin{center}
@@ -96,7 +113,7 @@ Once created, the asset can be seen in the assets list, where the admin can perf
 \end{center}
 \end{figure}
 
-As admin there is also button actions to perform crud operations such as create an asset item which will redirect the user to the create asset item form: 
+As an admin, there are also button actions to perform crud operations. Beyond Admins, actors responsible for the first step are allowed to create an asset item. This action will redirect the user to the create asset item form shown below. In the use case a coffee crop was harvested by the extraction company. Information about this step is added at this point. 
 
 \begin{figure}[H]
 \begin{center}
@@ -107,7 +124,9 @@ As admin there is also button actions to perform crud operations such as create 
 \end{figure}
 
 
-In the asset items list, beyond the crud actions there is also two new actions: move asset item and track asset item. The first one shows a form where the user can move an asset through the SCM steps. The user can only move this asset item to the next or the previous step in the supply chain. The second one displays the tracked info about the chosen asset item. It shows the children tree of the selected element and its ancestors.
+In the asset items list, beyond the crud actions there are also two new actions: move asset item and track asset item. The first one shows a form where the user can move an asset through the SCM steps. The user can only move this asset item to the next or the previous step in the supply chain. Move an item back to the previous step is a feature that can be used when a customer needs to return the product to whoever sold it, for example, when a product comes defective or the customer wants to exchange it. 
+
+To the use case, the companies are using this feature to move the products towards. First, the Manufacturer company bought two lots from the same coffee crop of the extraction company. The manufacturer, after processing the products sold them into three lots. The first and the second one were sent to the first distributor company and the third to the second distributor. The first distributor delivered the first lot to the retail company and from this lot, a cup of coffee was sold to the final customer. All these actions were made from the moving asset item form below:
 
 \begin{figure}[H]
 \begin{center}
@@ -117,14 +136,30 @@ In the asset items list, beyond the crud actions there is also two new actions: 
 \end{center}
 \end{figure}
 
-%
+Track asset item displays the tracked info about the chosen asset item. It shows the children's tree of the selected element and its ancestors. The image below shows the current status of the scenario described above, by the view of the first asset item which was selected (the extracted coffee crop).
 
 \begin{figure}[H]
 \begin{center}
   \includegraphics[scale=0.275]{images/use_example/092_track_asset_Item.png}
-\caption{Track an asset item.}
+\caption{Track an asset item forward.}
 \label{fig:track_asset_item}
 \end{center}
 \end{figure}
 
-When clicking in a node in the chart, the information about the selected node is displayed under the diagram.
+When clicking on a node in the chart, the information about the selected node is displayed under the diagram. Using this feature, the final user can track and see all the way backwards its cup of coffee has been passed. This information would be important if a problem occurred and also all the companies involved in this process could also track this information to better understand what happened, identify the possible step where a problem arose and provide input for decision making.
+
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[scale=0.375]{images/use_example/trackbackwards.png}
+\caption{Track an asset item backward.}
+\label{fig:track_asset_item}
+\end{center}
+\end{figure}
+
+Usage of blockchain helped to solve the problem since all the information under the blockchain is immutable, it can be audited since the information is stored and cannot be modified or deleted, the system allows anyone to check the traceability of previous records which can be achieved by arriving to the beginning of the chain. A blockchain does play a key role in traceability, as it ensures the data logged is not tampered with once it has been saved to the blockchain. 
+ 
+ 
+ 
+ 
+ 

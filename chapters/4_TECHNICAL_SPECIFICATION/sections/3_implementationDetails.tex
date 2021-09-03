@@ -17,8 +17,6 @@ When creating an asset item, an \textit{AssetItemId} is generated. Each entity i
 
 For audit purposes some methods where implemented in order to get info about the blocks and transactions stored in the ledger. These are the methods: \textit{getBlockByTxID, getChainInfo, getBlockByHash, getBlockByNumber,} and \textit{getTransactionByID}. The appendix \ref{app:auditMethods} contains their implementation.
 
-Figure~\ref{fig:sequenceDiagram} shows the interaction flow from users with Árion platform. Initially, an admin persona creates and configure the SCM, adding information about the steps and the users. After that, the admin can activate this SCM, and from that point, the actors can interact with the SCM to provide information about an asset item and also move this asset item through the supply chain. From that point too, any user can track an asset item to get information about the required good.
-
 %htbp
 \begin{figure}[ht]
 \begin{center}
@@ -28,6 +26,7 @@ Figure~\ref{fig:sequenceDiagram} shows the interaction flow from users with Ári
 \end{center}
 \end{figure}
 
+Figure~\ref{fig:sequenceDiagram} shows the interaction flow from users with Árion platform. Initially, an admin persona creates and configure the SCM, adding information about the steps and the users. After that, the admin can activate this SCM, and from that point, the actors can interact with the SCM to provide information about an asset item and also move this asset item through the supply chain. From that point too, any user can track an asset item to get information about the required good.
 
 The backend gateway exposes all the endpoints shown in table \ref{table:endpoints}. These endpoints are integrated with the frontend and can be used in the future work to integrate with a mobile app or an external application.
 
