@@ -1,21 +1,21 @@
 \section{Implementation Details}\label{sec:Implementation}
 
-The chaincode is written in Golang and provides all contracts needed to proceed traceability in the application. All contracts for use in chaincode must implement the interface \textit{contractapi.ContractInterface}. 
+The chaincode is written in Golang and provides all contracts needed to proceed with traceability in the application. All contracts for use in chaincode must implement the interface \textit{contractapi.ContractInterface}. 
 
-The first step is to create a JSON config file providing all information about these three items. A configuration file includes \textit{assetId}, a list of actors and a list of ordered steps. The chaincode processes this file through  \textit{initLedger} and \textit{createNewAsset} functions. A template for config file can be found in the appendix \ref{app:template}.
+The first step is to create a JSON config file providing all information about these three items. A configuration file includes \textit{assetId}, a list of actors, and a list of ordered steps. The chaincode processes this file through  \textit{initLedger} and \textit{createNewAsset} functions. A template for the config file can be found in appendix \ref{app:template}.
 
-Front-end WebApp enables a user to define settings through a Configuration Page, adding these to the configuration file, as shown in Figure~\ref{fig:create_asset_4}. Assets, asset items, steps and actors are described in the appendix \ref{app:structs}. There are create methods for each one,  responsible for creating an instance of these \textit{structs} and save the state into the Blockchain. Query methods are responsible for interact with the information of any item in the Blockchain.
+Front-end WebApp enables users to define settings through a Configuration Page, adding these to the configuration file, as shown in Figure~\ref{fig:create_asset_4}. Assets, asset items, steps, and actors are described in appendix \ref{app:structs}. There are create methods for each one,  responsible for creating an instance of these \textit{structs} and save the state into the blockchain. Query methods are responsible for interact with the information of any item in the blockchain.
 
-The chaincode \textit{main} function invokes the \textit{initLedger} function, reads the configuration files and raises the platform enabling users to interact with the Blockchain via exposing its API.
+The chaincode \textit{main} function invokes the \textit{initLedger} function, reads the configuration files, and raises the platform enabling users to interact with the blockchain via exposing its API.
 
-When creating an asset item, an \textit{AssetItemId} is generated. Each entity in the chain will have its unique entity ID and timestamp when it starts processing the transaction. By querying \textit{AssetItemId}, the user can easily track the current transaction information and status. Finally, completed all steps, the Blockchain will update \textit{deliverDate} and mark the status as completed once the last actor (generally the consumer) has received the order. The \textit{CreateAsset} function is detailed on the appendix \ref{app:CreateAsset}.
+When creating an asset item, an \textit{AssetItemId} is generated. Each entity in the chain will have its unique entity ID and timestamp when processing the transaction. By querying \textit{AssetItemId}, the user can easily track the current transaction information and status. Finally, completed all steps, the blockchain will update \textit{deliverDate} and mark the status as completed once the last actor (generally the consumer) has received the order. The \textit{CreateAsset} function is detailed in appendix \ref{app:CreateAsset}.
 
 
-\textit{MoveAssetItem} is the method called to update an asset item when it is moved from a step to another. It updates the \textit{CurrentOwnerId}, the \textit{ProcessDate}, information about prices and many other details of the transactions by the key/value map \textit{aditionalInfo}. Its details is on the appendix \ref{app:MoveAssetItem}.
+\textit{MoveAssetItem} is the method to update an asset item when moved from one step to another. It updates the \textit{CurrentOwnerId}, the \textit{ProcessDate}, information about prices, and many other details of the transactions by the key/value map \textit{aditionalInfo}. Its details are in appendix \ref{app:MoveAssetItem}.
 
-\textit{TrackAssetItem} is the method responsible for track an asset item. It returns the children tree of the given element and its ancestors from the beginning of the Supply chain. This method uses the function getChildenTree to get the current item's children nodes. The appendix \ref{app:TrackAssetItem} contains its implementation.
+\textit{TrackAssetItem} is the method responsible for tracking an asset item. It returns the children's tree of the given element and its ancestors from the beginning of the Supply chain. This method uses the function \textit{getChildenTree} to get the current item's children nodes. Appendix \ref{app:TrackAssetItem} contains its implementation.
 
-For audit purposes some methods where implemented in order to get info about the blocks and transactions stored in the ledger. These are the methods: \textit{getBlockByTxID, getChainInfo, getBlockByHash, getBlockByNumber,} and \textit{getTransactionByID}. The appendix \ref{app:auditMethods} contains their implementation.
+For audit purposes, some methods were implemented to get info about the blocks and transactions stored in the ledger. These are the methods: \textit{getBlockByTxID, getChainInfo, getBlockByHash, getBlockByNumber,} and \textit{getTransactionByID}. Appendix \ref{app:auditMethods} contains their implementation.
 
 %htbp
 \begin{figure}[ht]
@@ -26,9 +26,9 @@ For audit purposes some methods where implemented in order to get info about the
 \end{center}
 \end{figure}
 
-Figure~\ref{fig:sequenceDiagram} shows the interaction flow from users with Árion platform. Initially, an admin persona creates and configure the SCM, adding information about the steps and the users. After that, the admin can activate this SCM, and from that point, the actors can interact with the SCM to provide information about an asset item and also move this asset item through the supply chain. From that point too, any user can track an asset item to get information about the required good.
+Figure~\ref{fig:sequenceDiagram} shows the interaction flow from users with the Arion platform. Initially, an admin persona creates and configure the SCM, adding information about the steps and the users. After that, the admin can activate this SCM, and from that point, the actors can interact with the SCM to provide information about an asset item and also move this asset item through the supply chain. From that point, any user can track an asset item to get information about the required goods.
 
-The backend gateway exposes all the endpoints shown in table \ref{table:endpoints}. These endpoints are integrated with the frontend and can be used in the future work to integrate with a mobile app or an external application.
+The backend gateway exposes all the endpoints shown in table \ref{table:endpoints}. These endpoints are integrated with the frontend and can be used in future work to integrate with a mobile app or an external application.
 
 
 \begin{table}[htb]
@@ -102,7 +102,7 @@ The backend gateway exposes all the endpoints shown in table \ref{table:endpoint
         \hline 
          GET & /transactions:id & Return the transaction specified by ID\\
         \hline 
-         GET & /chain & Return a Blockchain Info object marshalled in bytes\\
+         GET & /chain & Return a blockchain Info object marshalled in bytes\\
         \hline 
     \end{tabular}
     \end{center}

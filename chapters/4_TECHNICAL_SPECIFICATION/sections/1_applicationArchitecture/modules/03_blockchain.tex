@@ -1,10 +1,10 @@
 \subsection{Blockchain}\label{sec:BlockchainModule}
 
-SCM-BP uses Blockchain as a supply chain that track parts and service provenance, ensure authenticity of goods, block counterfeits and reduce conflicts. In context of SCM-BP, the Blockchain module consists in a smart contract, chaincode and the ledger. From the application developer’s perspective, a smart contract, together with the ledger, form the heart of a Hyperledger Fabric blockchain system. Whereas a ledger holds facts about the current and historical state of a set of business objects, a smart contract defines the executable logic that generates new facts that are added to the ledger. 
-Based on the discussion in the section \ref{sec:versus} and to achieve the non functional requirements exposed on the appendix \ref{app:Non-functional}, the permissioned blockchain was chosen and Hyperledger Fabric as its implementation. 
+SCM-BP uses blockchain as a supply chain that tracks parts and service provenance, ensures the authenticity of goods, blocks counterfeits, and reduces conflicts. In SCM- BP, the Blockchain module consists of a smart contract, chaincode, and ledger. From the application developer's perspective, a smart contract and the ledger form the heart of a Hyperledger Fabric blockchain system. Whereas a ledger holds facts about the current and historical state of a set of business objects, a smart contract defines the executable logic that generates new facts added to the ledger. 
+Based on the discussion in section \ref{sec:versus} and to achieve the non-functional requirements exposed in appendix \ref{app:Non-functional}, the permissioned blockchain was chosen and Hyperledger Fabric as its implementation. 
 
 \subsubsection{Smart contract}
-Before businesses can transact with each other, they must define a common set of contracts covering common terms, data, rules, concept definitions, and processes. Taken together, these contracts lay out the business model that govern all of the interactions between transacting parties.
+Before businesses can transact with each other, they must define a common set of contracts covering common terms, data, rules, concept definitions, and processes. Together, these contracts lay out the business model that governs all of the interactions between transacting parties.
 
 A smart contract defines the rules between different organizations in executable code. Applications invoke a smart contract to generate transactions that are recorded on the ledger.
 
@@ -12,16 +12,16 @@ A smart contract defines the rules between different organizations in executable
 Hyperledger Fabric users often use the terms smart contract and chaincode interchangeably. In general, a smart contract defines the transaction logic that controls the lifecycle of a business object contained in the world state. It is then packaged into a chaincode which is then deployed to a blockchain network. Think of smart contracts as governing transactions, whereas chaincode governs how smart contracts are packaged for deployment.
 
 \subsubsection{Ledger}
-At the simplest level, a blockchain immutably records transactions which update states in a ledger. A smart contract programmatically accesses two distinct pieces of the ledger – a blockchain, which immutably records the history of all transactions, and a world state that holds a cache of the current value of these states, as it’s the current value of an object that is usually required.
+At the simplest level, a blockchain immutably records transactions that update states in a ledger. A smart contract programmatically accesses two distinct pieces of the ledger: a blockchain, which immutably records the history of all transactions and a world state that holds a cache of the current value of these states, as it’s the current value of an object that is usually required.
 
-The ledger is the sequenced, tamper-resistant record of all state transitions in the fabric. State transitions are a result of chaincode invocations (‘transactions’) submitted by participating parties. Each transaction results in a set of asset key-value pairs that are committed to the ledger as creates, updates, or deletes.The ledger is comprised of a blockchain (‘chain’) to store the immutable, sequenced record in blocks, as well as a state database to maintain current fabric state. There is one ledger per channel. Each peer maintains a copy of the ledger for each channel of which they are a member.
+The ledger is the sequenced, tamper-resistant record of all state transitions in the fabric. State transitions are a result of chaincode invocations (‘transactions’) submitted by participating parties. Each transaction results in a set of asset key-value pairs committed to the ledger as creates, updates, or deletes. The ledger comprises a blockchain (‘chain’) to store the immutable, sequenced record in blocks, as well as a state database to maintain the current fabric state. There is one ledger per channel. Each peer maintains a copy of the ledger for each channel of which they are a member.
 
-Smart contracts primarily put, get and delete states in the world state, and can also query the immutable blockchain record of transactions.
+Smart contracts primarily put, get, and delete states in the world state and query the immutable blockchain record of transactions.
 
 \begin{itemize}
 \item A \textbf{get} typically represents a query to retrieve information about the current state of a business object.
 \item A \textbf{put} typically creates a new business object or modifies an existing one in the ledger world state.
-\item A \textbf{delete} typically represents the removal of a business object from the current state of the ledger, but not its history.
+\item A \textbf{delete} typically represents the removal of a business object from the current state of the ledger but not its history.
 \end{itemize}
 
 Smart contracts have many APIs available to them. Critically, in all cases, whether transactions create, read, update or delete business objects in the world state, the blockchain contains an immutable record of these changes.

@@ -1,22 +1,22 @@
 \section{Actions And Actors}\label{sec:actionsAndActors}
 
-The system is governed by a set of rules. These rules define how users are to interact with the system, and how the data is shared among the users. Moreover, once the rules are stored in the blockchain, they can not be altered without broadcasting to all nodes and verified by most of them.
+A set of rules governs the system. These rules define how users interact with the system and how the data is shared among the users. Moreover, once the rules are stored in the blockchain, they can not be altered without broadcasting to all nodes and verified by most of them.
 %%% SETUP
 
 \subsection{Setup}\label{sec:Setup}
-Setup is the set of actions to configure the application. Setup phase is when a new supply chain is created or an existing one is updated or deleted. Users can also be created, updated and deleted by setup actions. When creating or editing a supply chain, Admin users will define which steps, sub-steps and information that the supply chain flow will contain, and which users from member group is allowed to add info and move asset to each step in the logistics network.
+Setup is the set of actions to configure the application. The setup phase is when a new supply chain is created, or an existing one is updated or deleted. Users can also be created, updated, and deleted by setup actions. When creating or editing a supply chain, Admin users will define which steps, sub-steps, and information the supply chain flow will contain. Users from member groups can add info and move an asset to each step in the logistics network.
 
-Administrators are the only users in Admin group. This actor type has access to all areas of the program and have the same abilities that all other user types (configure, move asset and view flow), but his main responsibility is to configure the application, performing the setup actions. 
+Administrators are the only users in the Admin group. This actor type has access to all areas of the program. It has the same abilities like all other user types (configuring, moving the asset, and viewing flow). However, his primary responsibility is to configure the application and perform the setup actions.
 
 
 %%% DATA INSERTION
 
 \subsection{Data Insertion}\label{sec:DataInsertion}
 
-Data insertion are the actions that will fill the supply chain flow with data. Once a new supply chain is created by the admin user, it is ready to be populated with information. Member and admin users are responsible for perform these actions. In Data Insertion phase users can update information from a specific step and sub-step and move assets depending on the rules applied in the setup phase. The most common actor types in SCM are: Raw material/Producer, Manufacturer, Distributor Wholesaler and Retailer.
+Data insertion is the action that will fill the supply chain flow with data. Once the admin user creates a new supply chain, it is ready to be populated with information. Member and admin users are responsible for performing these actions. In the Data Insertion phase, users can update information from a specific step and sub-step and move assets depending on the rules applied in the setup phase. The most common actor types in SCM are Raw material/Producer, Manufacturer, Distributor Wholesaler, and Retailer.
 
 %%% VISUALIZATION
 
 \subsection{Visualization}\label{sec:Visualization}
 
-Visualization actions can be performed by any user in the system but its main purpose is to provide to the end user the capability of track the flow off an asset from point of origin to point of consumption.
+Any user in the system can perform visualization actions. However, its main purpose is to provide the end-user the capability to track the flow of an asset from the point of origin to the point of consumption.
