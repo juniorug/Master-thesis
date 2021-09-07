@@ -28,82 +28,82 @@ For audit purposes, some methods were implemented to get info about the blocks a
 
 Figure~\ref{fig:sequenceDiagram} shows the interaction flow from users with the Arion platform. Initially, an admin persona creates and configure the SCM, adding information about the steps and the users. After that, the admin can activate this SCM, and from that point, the actors can interact with the SCM to provide information about an asset item and also move this asset item through the supply chain. From that point, any user can track an asset item to get information about the required goods.
 
-The backend gateway exposes all the endpoints shown in table \ref{table:endpoints}. These endpoints are integrated with the frontend and can be used in future work to integrate with a mobile app or an external application.
+The backend gateway exposes all the endpoints shown in table \ref{app:endpoints}. These endpoints are integrated with the frontend and can be used in future work to integrate with a mobile app or an external application.
 
 
-\begin{table}[htb]
-\centering
-\caption{Backend endpoints}
-\label{table:endpoints}
-    \begin{center}
-    \begin{tabular}{|l|p{4.5cm}|p{7.664cm}|}
-        \hline 
-        \thead{Verb} & \thead{URI} & \thead{Description}\\
-        \hline 
-        \cellcolor{cyan}\textbf{Actors}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
-        \hline 
-        POST & /actors & creates a new actor\\
-        \hline 
-        GET & /actors & retrieves the actors' list\\
-        \hline 
-        PUT & /actors/:id & updates an existing actor\\
-        \hline 
-        GET & /actors/:id & retrieves an existing actor\\
-        \hline 
-        DELETE & /actors/:id & removes an existing actor\\
-        \hline 
-        \cellcolor{cyan}\textbf{Steps}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
-        \hline 
-        POST & /steps & creates a new step\\
-        \hline 
-        GET & /steps & retrieves the steps' list\\
-        \hline 
-        PUT & /steps/:id & updates an existing step\\
-        \hline 
-        GET & /steps/:id & retrieves an existing step\\
-        \hline 
-        DELETE & /steps/:id & removes an existing step\\
-        \hline 
-        \cellcolor{cyan}\textbf{Asset Items}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
-        \hline 
-        POST & /asset-items & creates a new asset item\\
-        \hline 
-        GET & /asset-items & retrieves the asset items' list\\
-        \hline 
-        PUT & /asset-items/:id & updates an existing asset item\\
-        \hline 
-        GET & /asset-items/:id & retrieves an existing asset item\\
-        \hline 
-        DELETE & /asset-items/:id & removes an existing asset item\\
-        \hline 
-        POST & /asset-items/:id & moves an asset item through the SCM\\
-        \hline 
-        GET & /asset-items/track/:id & tracks an asset item through the SCM\\
-        \hline
-        \cellcolor{cyan}\textbf{Assets}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
-        \hline 
-        POST & /assets & creates a new asset\\
-        \hline 
-        GET & /assets & retrieves the assets' list\\
-        \hline 
-        PUT & /assets/:id & updates an existing asset\\
-        \hline 
-        GET & /assets/:id & retrieves an existing asset\\
-        \hline 
-        DELETE & /assets/:id & removes an existing asset\\
-        \hline 
-        \cellcolor{cyan}\textbf{Audit}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
-        \hline
-         GET & /blocks/:number & Return the block specified by block number\\
-        \hline 
-         GET & /blocks/hash/:hash & Return the block specified by block hash\\
-        \hline 
-         GET & /blocks/tx-id/:tx-id & Return the transaction specified by Transaction ID\\
-        \hline 
-         GET & /transactions:id & Return the transaction specified by ID\\
-        \hline 
-         GET & /chain & Return a blockchain Info object marshalled in bytes\\
-        \hline 
-    \end{tabular}
-    \end{center}
-\end{table}
+% \begin{table}[htb]
+% \centering
+% \caption{Backend endpoints}
+% \label{table:endpoints}
+%     \begin{center}
+%     \begin{tabular}{|l|p{4.5cm}|p{7.664cm}|}
+%         \hline 
+%         \thead{Verb} & \thead{URI} & \thead{Description}\\
+%         \hline 
+%         \cellcolor{cyan}\textbf{Actors}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
+%         \hline 
+%         POST & /actors & creates a new actor\\
+%         \hline 
+%         GET & /actors & retrieves the actors' list\\
+%         \hline 
+%         PUT & /actors/:id & updates an existing actor\\
+%         \hline 
+%         GET & /actors/:id & retrieves an existing actor\\
+%         \hline 
+%         DELETE & /actors/:id & removes an existing actor\\
+%         \hline 
+%         \cellcolor{cyan}\textbf{Steps}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
+%         \hline 
+%         POST & /steps & creates a new step\\
+%         \hline 
+%         GET & /steps & retrieves the steps' list\\
+%         \hline 
+%         PUT & /steps/:id & updates an existing step\\
+%         \hline 
+%         GET & /steps/:id & retrieves an existing step\\
+%         \hline 
+%         DELETE & /steps/:id & removes an existing step\\
+%         \hline 
+%         \cellcolor{cyan}\textbf{Asset Items}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
+%         \hline 
+%         POST & /asset-items & creates a new asset item\\
+%         \hline 
+%         GET & /asset-items & retrieves the asset items' list\\
+%         \hline 
+%         PUT & /asset-items/:id & updates an existing asset item\\
+%         \hline 
+%         GET & /asset-items/:id & retrieves an existing asset item\\
+%         \hline 
+%         DELETE & /asset-items/:id & removes an existing asset item\\
+%         \hline 
+%         POST & /asset-items/:id & moves an asset item through the SCM\\
+%         \hline 
+%         GET & /asset-items/track/:id & tracks an asset item through the SCM\\
+%         \hline
+%         \cellcolor{cyan}\textbf{Assets}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
+%         \hline 
+%         POST & /assets & creates a new asset\\
+%         \hline 
+%         GET & /assets & retrieves the assets' list\\
+%         \hline 
+%         PUT & /assets/:id & updates an existing asset\\
+%         \hline 
+%         GET & /assets/:id & retrieves an existing asset\\
+%         \hline 
+%         DELETE & /assets/:id & removes an existing asset\\
+%         \hline 
+%         \cellcolor{cyan}\textbf{Audit}  & \cellcolor{cyan}\textbf{} & \cellcolor{cyan}\textbf{} \\
+%         \hline
+%          GET & /blocks/:number & Return the block specified by block number\\
+%         \hline 
+%          GET & /blocks/hash/:hash & Return the block specified by block hash\\
+%         \hline 
+%          GET & /blocks/tx-id/:tx-id & Return the transaction specified by Transaction ID\\
+%         \hline 
+%          GET & /transactions:id & Return the transaction specified by ID\\
+%         \hline 
+%          GET & /chain & Return a blockchain Info object marshalled in bytes\\
+%         \hline 
+%     \end{tabular}
+%     \end{center}
+% \end{table}
