@@ -2,7 +2,7 @@
 In this section, the key elements of the blockchain that contribute to its properties will be displayed: integrity, immutability, transparency, availability, disintermediation, decentralization.
 
 \subsection{Cryptography}\label{sec:criptografia}
-Blockchain relies heavily on encryption to satisfy system and application security requirements. As the word suggests, cryptocurrencies also make heavy use of encryption. Encryption provides a mechanism for safely encoding the rules of system encryption on the system itself. This can be used to prevent tampering and misconceptions and coding in a mathematical protocol the rules for creating new currency units. So, before understanding blockchains correctly, it is necessary to understand the cryptographic foundations they trust \cite{narayanan2016bitcoin}.
+Blockchain relies heavily on encryption to satisfy system and application security requirements. As the word suggests, cryptocurrencies also make heavy use of encryption. Encryption provides a mechanism for safely encoding the rules of system encryption on the system itself. This can prevent tampering and misconceptions and coding in a mathematical protocol the rules for creating new currency units. So, before understanding blockchains correctly, it is necessary to understand the cryptographic foundations they trust \cite{narayanan2016bitcoin}.
 
 Cryptography is a profound academic field of research that uses many advanced mathematical techniques that are notoriously subtle and complicated. In this chapter, cryptographic hashes and digital signatures will be defined, which stand out among the most used resources. For more details, the reader should refer to the book \cite{narayanan2016bitcoin}.
 
@@ -12,19 +12,19 @@ A hash function is a mathematical function with the three properties to be follo
 \begin{itemize}
 \item  Its input can be any string of any length;
 \item Produces a fixed size output. To make concrete the discussion in this chapter (e.g., 256 digits);
-\item It is efficiently computable. Intuitively, this means that for a given input string, it is possible to find out the hash function output within a reasonable time. Technically, hashing a n-bit string must have a $O(n)$ runtime.
+\item It is efficiently computable. Intuitively, this means that it is possible to find out the hash function output within a reasonable time for a given input string. Technically, hashing a n-bit string must have an $O(n)$ runtime.
 \end{itemize}
 
 These properties define a general hash function. Cryptographic hash functions (or cryptographic summaries) are unidirectional and hardly allow retrieving the original value $x$ from the hash $h$. For a hash function to be cryptographically secure, it must satisfy the following three properties: (1) collision resistance, (2) hiding, and (3) puzzle friendliness \cite{greve2018blockchain}.
 
 A collision occurs when two distinct inputs produce the same output. A hash function $H$ is collision-resistant when it is impossible to find two values $x$ and $y$, such that $x \neq y$ and $H(x) = H(y)$ \cite{narayanan2016bitcoin}.
 
-The hidden property states that having the hash function output $y = H (x)$, there is no possible way to find out the $x$ input \cite{greve2018blockchain}.
+The hidden property states that having the hash function output $y = H (x)$, there is no possible way to find the $x$ input \cite{greve2018blockchain}.
 
 A hash function $H$ is considered puzzle friendliness if for each possible output value of $n$ bits $y$ if $k$ is chosen from a distribution with high min-entropy, then it is impracticable to find $x$ such that $H (k \| x) = y$ in time significantly less than $2^n$ \cite{narayanan2016bitcoin}.
 
 \subsubsection{Digital Signatures}\label{sec:assinaturasDigitais}
-A digital signature is supposed to be a digital analog of a handwritten paper signature. Two signature properties are desired which correspond well to the analogy of the handwritten signature: first, only one person can make their signature, but anyone can verify if it is valid. Secondly, it is desired that the signature be linked to a specific document, so it cannot be used to indicate the agreement or endorsement to a different document \cite{merkle1989certified}. Moreover, it is not possible to forge a signature in such a way as to reuse it in some other context. That is, signatures must be irrefutable.
+A digital signature is supposed to be a digital analog of a handwritten paper signature. Two signature properties are desired, which correspond well to the analogy of the handwritten signature. First, only one person can make their signature, but anyone can verify if it is valid. Secondly, it is desired that the signature be linked to a specific document, so it cannot indicate the agreement or endorsement to a different document \cite{merkle1989certified}. Moreover, it is not possible to forge a signature in such a way as to reuse it in some other context. That is, signatures must be irrefutable.
 
 To implement digital signatures, asymmetric key encryption is used. A secret key (sk) is used for signing the document, and a public key (pk) is used to attest the signature's authenticity \cite{greve2018blockchain}.
 
@@ -43,7 +43,7 @@ The following two properties must be maintained:
 \item Signatures are existentially unfalsifiable: signature cannot be forged.
 \end{itemize}
 
-It is noted that \textit{generateKeys()} and \textit{sign()} can be random algorithms. In fact, generating keys should be randomized because it should be generating different keys for different people. On the other hand, \textit{verify()} will always be deterministic.
+It is noted that \textit{generateKeys()} and \textit{sign()} can be random algorithms. Generating keys should be randomized because it should be generating different keys for different people. On the other hand, \textit{verify()} will always be deterministic.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -58,9 +58,9 @@ The key to blockchain operation is that the network must agree collectively on t
 
 In this context, consensus emerges as a fundamental problem since it allows distributed participants to coordinate their actions to reach joint decisions, ensuring the consistency of safety and system progress (liveness) despite failures \cite{greve2018blockchain}. More specifically, in the context of blockchain, consensus enables an agreement on the next block that will be added to the blockchain.
 
-In blockchain, reaching consensus between untrusted nodes is a transformation of the problem of \ac{BG} \cite{lamport1982byzantine}. In the BG problem, a group of generals who command a portion of the Byzantine army circles the city. The attack would fail if only part of the generals attacked the city. Generals need to communicate to agree on the attack or not. However, there may be traitors in the generals. The traitor could send different decisions to different generals. This is an environment without trust.
+In the blockchain, reaching consensus between untrusted nodes is a transformation of the problem of \ac{BG} \cite{lamport1982byzantine}. In the BG problem, a group of generals who command a portion of the Byzantine army circles the city. The attack would fail if only part of the generals attacked the city. Generals need to communicate to agree on the attack or not. However, there may be traitors in the generals. The traitor could send different decisions to different generals. This is an environment without trust.
 
-Reaching consensus in such an environment is a challenge. This is also a challenge for blockchain, because its network is distributed, and there is no central node that ensures that ledgers on distributed nodes be all the same. Nodes do not need to trust other nodes. Thus, some protocols are required to ensure that ledgers on different nodes are consistent \cite{kostarev2017review}. To solve the consensus problem, several algorithms have been proposed and are listed below. For more details on each algorithm is recommended to read the article \cite{mingxiao2017review}.
+Reaching consensus in such an environment is a challenge. This is also a challenge for blockchain because its network is distributed, and there is no central node that ensures that ledgers on distributed nodes be all the same. Nodes do not need to trust other nodes. Thus, some protocols are required to ensure that ledgers on different nodes are consistent \cite{kostarev2017review}. To solve the consensus problem, several algorithms have been proposed and are listed below. For more details on each algorithm is recommended to read the article \cite{mingxiao2017review}.
 
 \begin{itemize}
 \item Proof-of-Work;
