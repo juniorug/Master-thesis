@@ -3,7 +3,7 @@
 % É recomendável utilizar `\acresetall' no início de cada capítulo para reiníciar o contator de referências às siglas.
 \acresetall 
 
-The rapid growth of Internet technologies allowed the onset of lots of technologies applied in traceability systems. In order to solve some problems with Supply Chain traceability, many Internet of Things (IoT) technologies, such as RFID and wireless sensor network-based architectures, have been applied. However, these technologies do not guarantee that the information shared by supply chain members in the traceability systems can be trusted \cite{tian2017supply}.
+The rapid growth of Internet technologies allowed the onset of lots of technologies applied in traceability systems. In order to solve some problems with Supply Chain traceability, many \ac{IoT} technologies, such as \ac{RFID} and wireless sensor network-based architectures, have been applied. However, these technologies do not guarantee that the information shared by supply chain members in the traceability systems can be trusted \cite{tian2017supply}.
 
 Blockchain presents a whole new approach based on decentralization. Nonetheless, being in its early stages has some challenges to deal with, in which scalability and performance become mainly defiance to face the massive amount of data in the real world. Through this technology, some solutions have been raised, as follows.
 
@@ -11,7 +11,7 @@ Blockchain presents a whole new approach based on decentralization. Nonetheless,
 
 Microsoft's Dynamics 365 is excellent for simple SCM needs, and it is just as accessible as every other Microsoft suite on the market. Dynamics integrates with third-party management systems, but it is primarily for "simple needs." Microsoft's offering is not so great for complex supply chain demands - but then, the  more significant majority of organizations have not got overly complex networks \cite{bellu2018microsoft}.
 
-Plex Systems was one of the very first supply chain and manufacturing Software-as-a-Service (SaaS) ERP systems. The software is a cloud-based SCM that is very popular with industry-leading companies - especially in the aerospace and automotive industries. Unfortunately, though, for all its maturity and complex capabilities, Plex lets organizations down with its inability to support several implementation partners \cite{plex}.
+Plex Systems was one of the very first supply chain and manufacturing \ac{SaaS} ERP systems. The software is a cloud-based SCM that is very popular with industry-leading companies - especially in the aerospace and automotive industries. Unfortunately, though, for all its maturity and complex capabilities, Plex lets organizations down with its inability to support several implementation partners \cite{plex}.
 
 Oracle NetSuite is a cloud-based supply chain and ERP system for the less complex needs of moderately-sized companies and most SCM and ERP systems \cite{rolling2016using}. As ERP focused system, this project is focused on business management instead of SCM traceability and information transparency \cite{rolling2016using}.
 
@@ -29,6 +29,52 @@ The Everledger Diamonds project provides a Blockchain-based solution to facilita
 
 IBM Food Trust is a pilot project motivated by food contamination scandals worldwide. The main goal is to tackling food safety in the supply chain using Blockchain technology. This platform tracked pork in China and mangoes in the Americas \cite{kamath2018food}.
 
+\section{COMPARISON WITH THE PRESENTED WORK} \label{sec:Comparison}
 These projects are focused on specific products only and are closed projects. Still, there is a general lack of standards for implementing a Blockchain approach for traceability. A Blockchain must be universal and adaptable to specific situations \cite{valenta2017comparison}. In addition, the need to agree on a particular type of Blockchain to be used puts the parties under pressure. 
 
+Compared to traditional systems, the great difference of this work is to provide the non-functional requirements acquired by using the blockchain:
+
+\begin{itemize}
+\item More reliable operations;
+\item More democratic transactions;
+\item Process optimization;
+\item Ease of coordination between companies;
+\item Recording data in chronological order;
+\item Cost reduction;
+\item Distributed and autonomous platform.
+\end{itemize}
+
+In relation to blockchain-based systems:
+
+\begin{itemize}
+\item Not specific to a product type;
+\item Open source project and not closed;
+\end{itemize}
+
 Our work is intended to provide a Blockchain-based platform to facilitate the development of applications for traceability in supply chain management.
+
+\begin{table}[H]
+\caption{Related Works and their main characteristics, strategies and results.}
+\label{table:userStories}
+    \begin{tabular}{|l|p{2.1cm}|p{3.2cm}|p{4.5cm}|}
+    \hline 
+    \thead{Related work} & \thead{Blockchain} & \thead{Solution} & \thead{Main Deficiency} \\ 
+    \hline 
+    Microsoft Dynamics 365  & No & Simple SCM needs & Centralized solution. Not a distributed and autonomous platform.\\
+    \hline
+    Plex System  & No & SaaS ERP system & Centralized solution. Not easy to coordinate between companies. High cost. Private System. \\
+    \hline 
+    Oracle  NetSuite  & No & cloud-based supply chain and ERP system & Centralized solution. High cost. Private System.\\
+    \hline 
+    SAP SCM  & No & AI and the Internet of Things & High cost. Private System.\\
+    \hline 
+    Tian  & Yes & Oroposed system that combines HACCP, Blockchain, and IoT & Theoretical application. Food related only.\\
+    \hline 
+    Everledger Diamonds  & Yes & Blockchain-based solution & Product specific. Not an open source project. High cost. \\
+    \hline 
+    IBM Food Trust  & Yes & Blockchain-based solution & Product specific. Not an open source project. High cost.\\
+    \hline
+    SCM-BP  & Yes & Blockchain-based solution & Relies on a minimum amount of participation to obtain a reliable forecast.\\
+    \hline
+    \end{tabular}
+\end{table}
