@@ -133,12 +133,12 @@
 
 %% Language Independent
 
-\gdef\@maleadvisertitle{Orientador}
+\gdef\@maleadvisertitle{Advisor}
 \gdef\@femaleadvisertitle{Orientadora}
-\gdef\@malecoadvisertitle{Co-orientador}
+\gdef\@malecoadvisertitle{Co-advisor}
 \gdef\@femalecoadvisertitle{Co-orientadora}
 \gdef\@bachelordissertation{Trabalho de Gradua\c{c}\~{a}o}
-\gdef\@mastersdissertation{Disserta\c{c}\~{a}o de Mestrado}
+\gdef\@mastersdissertation{MASTER’S DISSERTATION}
 \gdef\@mscqualifying{Qualifica\c{c}\~{a}o de Mestrado}
 \gdef\@phdproposal{Qualifica\c{c}\~{a}o de Doutorado}
 \gdef\@phdthesis{Tese de Doutorado}
@@ -560,9 +560,8 @@ grau de \@degree\ em \@majorfield.}
   \vskip 45mm
   \begin{flushright}
     \begin{minipage}{0.5\textwidth}
-        Esta\@texttype\ foi apresentada ao \@program\ da \@university,
-        como requisito parcial para obten\c{c}\~{a}o do grau de\@degree\
-        em \@majorfield.
+        Dissertation presented to Programa de Pós-Graduação em Engenharia de Sistemas de Produtos of PPGESP of Instituto Federal da Bahia as a partial requirement for obtaining the Master of Science degree on Systems and Products Engineering.
+
     \end{minipage}
   \end{flushright}
   \begin{center}

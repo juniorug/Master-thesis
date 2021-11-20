@@ -48,7 +48,7 @@ It is noted that \textit{generateKeys()} and \textit{sign()} can be random algor
 \begin{figure}[htbp]
 \begin{center}
   \includegraphics[scale=1.0]{images/AliceBob.jpg}
-\caption{Signatures validated by public/private key.}
+\caption{Signatures validated by public/private key \cite{forging}.}
 \label{fig:authenticationExample}
 \end{center}
 \end{figure}
@@ -60,34 +60,9 @@ In this context, consensus emerges as a fundamental problem since it allows dist
 
 In the blockchain, reaching consensus between untrusted nodes is a transformation of the problem of \ac{BG} \cite{lamport1982byzantine}. In the BG problem, a group of generals who command a portion of the Byzantine army circles the city. The attack would fail if only part of the generals attacked the city. Generals need to communicate to agree on the attack or not. However, there may be traitors in the generals. The traitor could send different decisions to different generals. This is an environment without trust.
 
-Reaching consensus in such an environment is a challenge. This is also a challenge for blockchain because its network is distributed, and there is no central node that ensures that ledgers on distributed nodes be all the same. Nodes do not need to trust other nodes. Thus, some protocols are required to ensure that ledgers on different nodes are consistent \cite{kostarev2017review}. To solve the consensus problem, several algorithms have been proposed and are listed below. For more details on each algorithm is recommended to read the article \cite{mingxiao2017review}.
-
-\begin{itemize}
-\item Proof-of-Work;
-\item Proof-of-Stake;
-\item Delegated Proof-of-Stake;
-\item Leased Proof-Of-Stake;
-\item Proof of Elapsed Time;
-\item Practical Byzantine Fault Tolerance;
-\item Simplified Byzantine Fault Tolerance;
-\item Delegated Byzantine Fault Tolerance;
-\item Directed Acyclic Graphs;
-\item Proof-of-Activity;
-\item Proof-of-Importance;
-\item Proof-of-Capacity;
-\item Proof-of-Burn;
-\item Proof-of-Weight;
-\end{itemize}
+Reaching consensus in such an environment is a challenge. This is also a challenge for blockchain because its network is distributed, and there is no central node that ensures that ledgers on distributed nodes be all the same. Nodes do not need to trust other nodes. Thus, some protocols are required to ensure that ledgers on different nodes are consistent \cite{kostarev2017review}. To solve the consensus problem, several algorithms have been proposed, the mainly used are Proof-of-Work, Proof-of-Stake, Delegated Proof-of-Stake, Leased Proof-Of-Stake, Proof of Elapsed Time, Practical Byzantine Fault Tolerance, Simplified Byzantine Fault Tolerance, Delegated Byzantine Fault Tolerance, Directed Acyclic Graphs, Proof-of-Activity, Proof-of-Importance, Proof-of-Capacity, Proof-of-Burn and Proof-of-Weight \cite{mingxiao2017review}.
 
 A good consensus algorithm means efficiency, security, and convenience. Current standard consensus algorithms still have many shortcomings. New consensus algorithms are created to solve some blockchain-specific problems \cite{zheng2016blockchain}.
-
-\begin{figure}[htbp]
-\begin{center}
-  \includegraphics[scale=0.55]{images/consensus.png}
-\caption{Consensus Mechanism}
-\label{fig:Consensus}
-\end{center}
-\end{figure}
 
 
 \subsection{Distributed Ledger}\label{sec:livro}
@@ -108,7 +83,7 @@ The most fundamental definition of a transaction is an atomic event allowed by t
 
 In this case, it is necessary to search the blockchain between the block from the referenced transaction to the last block of the structure. Each node of the blockchain network independently validates transactions, and this feature contributes to the decentralization of the process \cite{greve2018blockchain}.
 
-\subsubsection{blocks}\label{sec:blocks}
+\subsubsection{Blocks}\label{sec:blocks}
 Blocks contain a header with the information needed for the current maintenance and its validation. A block consists of the block header and block body, as shown in Figure \ref{fig:block}. 
 
 \begin{figure}[htbp]
